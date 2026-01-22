@@ -227,6 +227,54 @@ source ~/.zshrc  # or ~/.bashrc
 
 ## First Use (30 seconds)
 
+### Test Drive: Copilot Mode (Recommended)
+
+**Prerequisites**:
+- ✅ GitHub Copilot Pro+ subscription active
+- ✅ copilot-api running (`copilot-api start` in separate terminal)
+
+```bash
+# Launch Claude Code with Copilot bridge
+ccc
+
+# Try asking something
+❯ What model am I talking to?
+```
+
+**What to expect**:
+
+**Claude Sonnet 4.5 (Default Model)**:
+![Claude Sonnet Response](assets/ccc-sonnet.png)
+
+*Note: Model correctly identifies as "Claude Sonnet 4.5" (via system prompt injection)*
+
+### Try Different Models
+
+```bash
+# Claude Opus (premium quality)
+ccc-opus
+❯ Analyze this architecture diagram
+
+# GPT-4.1 (OpenAI)
+ccc-gpt
+❯ Compare Python vs JavaScript for data processing
+
+# Ollama Offline (100% private)
+cco
+❯ Review this proprietary encryption algorithm
+```
+
+**Visual Examples**:
+
+**Claude Opus 4.5**:
+![Claude Opus](assets/ccc-opus.png)
+
+**GPT-4.1**:
+![GPT-4.1](assets/ccc-gpt.png)
+
+**Ollama Offline**:
+![Ollama](assets/cco.png)
+
 ### Check Status
 
 ```bash

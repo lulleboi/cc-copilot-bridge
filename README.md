@@ -35,9 +35,17 @@ A **GitHub Copilot bridge** that transforms your existing **Copilot Pro+ subscri
 
 ### 🎁 Three Providers in One Tool
 
-✅ **CORE**: GitHub Copilot Bridge → Daily development (FREE via your $10/month subscription)
-✅ **BONUS**: Ollama Local → Offline mode for proprietary code (100% private, no internet)
-✅ **FALLBACK**: Anthropic Direct API → Production-critical analysis (pay per token)
+✅ **CORE**: GitHub Copilot Bridge 
+
+→ Daily development (FREE via your $10/month subscription)
+
+✅ **BONUS**: Ollama Local 
+
+→ Offline mode for proprietary code (100% private, no internet)
+
+✅ **FALLBACK**: Anthropic Direct API 
+
+→ Production-critical analysis (pay per token)
 
 ### Architecture Overview
 
@@ -106,6 +114,20 @@ COPILOT_MODEL=claude-opus-4.5 ccc
 ccs
 ```
 
+**Visual Examples**:
+
+**Claude Sonnet 4.5 (Default)**:
+![Claude Sonnet 4.5](assets/ccc-sonnet.png)
+
+**Claude Opus 4.5 (Premium)**:
+![Claude Opus 4.5](assets/ccc-opus.png)
+
+**GPT-4.1 (OpenAI)**:
+![GPT-4.1](assets/ccc-gpt.png)
+
+**Ollama Offline (Private)**:
+![Ollama Offline](assets/cco.png)
+
 ---
 
 ## 💰 Cost Comparison
@@ -131,6 +153,13 @@ cco     # Ollama Local (offline/private)
 ```
 
 No config changes, no restarts, no environment variable juggling.
+
+**Help Menu**:
+![Claude Switch Help](assets/claude-switch-help.png)
+
+**Available commands**:
+- `ccs` / `claude-switch status` - Check all providers health
+- `claude-switch --help` - Full command reference
 
 ### 2. **Dynamic Model Selection** (25+ models)
 
