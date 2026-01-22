@@ -318,7 +318,14 @@ npm install -g copilot-api
 # 2. Start and authenticate
 copilot-api start
 # Follow the GitHub authentication flow
+```
 
+**What to expect**:
+![copilot-api start](assets/copilot-api.png)
+
+*copilot-api proxy server running with authentication logs*
+
+```bash
 # 3. Test
 ccc
 ```

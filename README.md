@@ -248,6 +248,11 @@ COPILOT_MODEL=gemini-2.5-pro ccc # Gemini
 - Access to 15+ models (Claude, GPT, Gemini families)
 - Best for: Daily development, experimentation, learning
 
+**copilot-api Running**:
+![copilot-api start](assets/copilot-api.png)
+
+*Screenshot: copilot-api proxy server logs showing active connections*
+
 **Requirements**:
 1. GitHub Copilot Pro+ subscription ($10/month)
 2. copilot-api running locally (`copilot-api start`)
