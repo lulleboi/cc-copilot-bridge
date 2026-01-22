@@ -29,3 +29,5 @@ temp*.sh
 # User-specific configs
 .env
 .env.local
+
+.serena
