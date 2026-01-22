@@ -542,7 +542,7 @@ grep "^# Version" ~/bin/claude-switch
 4. Improve docs: Documentation PRs always welcome
 5. Share workflows: Add examples to `examples/`
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 

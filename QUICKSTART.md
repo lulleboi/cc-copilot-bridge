@@ -419,7 +419,7 @@ Now that you're set up:
 
 1. 📖 **Learn all commands** → [Command Reference](docs/COMMANDS.md)
 2. 🎯 **Choose right tool** → [Decision Trees](docs/DECISION-TREES.md)
-3. 📋 **Print reference** → [Cheatsheet](CHEATSHEET.md)
+3. 📋 **Print reference** → [Cheatsheet](docs/CHEATSHEET.md)
 4. 🆘 **Troubleshooting** → [Common Issues](docs/TROUBLESHOOTING.md)
 
 ---

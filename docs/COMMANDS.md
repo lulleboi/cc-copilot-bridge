@@ -359,7 +359,7 @@ cat examples/multi-provider/OPTIMISATION-M4-PRO.md
 ## 📚 Related Documentation
 
 - [Quick Start Guide](../QUICKSTART.md) - Get started in 5 minutes
-- [Cheatsheet](../CHEATSHEET.md) - One-page printable reference
+- [Cheatsheet](CHEATSHEET.md) - One-page printable reference
 - [Decision Trees](DECISION-TREES.md) - Choose the right command
 - [Model Switching Guide](MODEL-SWITCHING.md) - Dynamic model selection
 - [Best Practices](BEST-PRACTICES.md) - Strategic usage patterns
