@@ -13,23 +13,94 @@
 
 ---
 
-## Installation (30 seconds)
+## Installation
 
-### Option 1: Automatic (Recommended)
+### Option 1: Automatic (Recommended) - 30 seconds
+
+Perfect if you trust the repository and want fastest setup.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/claude-switch/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
 source ~/.zshrc  # or ~/.bashrc
 ```
 
-### Option 2: Manual
+**What it does**:
+- ✅ Downloads `claude-switch` to `~/bin/`
+- ✅ Configures shell aliases automatically
+- ✅ Creates log directory
+- ✅ Verifies prerequisites
+
+---
+
+### Option 2: Manual (Security-conscious) - 3 minutes
+
+Perfect if you want to review every step or customize the installation.
+
+#### Prerequisites Check
+
+Verify you have the required tools:
 
 ```bash
-# Download script
-curl -o ~/bin/claude-switch https://raw.githubusercontent.com/FlorianBruniaux/claude-switch/main/claude-switch
-chmod +x ~/bin/claude-switch
+# Check Claude Code CLI
+claude --version
+# If missing: npm install -g @anthropic-ai/claude-code
 
-# Add aliases to ~/.zshrc (or ~/.bashrc)
+# Check netcat (for provider health checks)
+nc -h 2>&1 | head -1
+# If missing:
+#   macOS: brew install netcat
+#   Linux: sudo apt-get install netcat
+```
+
+#### Step 1: Create Directories
+
+```bash
+# Create binary directory
+mkdir -p ~/bin
+
+# Create logs directory
+mkdir -p ~/.claude
+```
+
+#### Step 2: Download Script
+
+**Option A: With curl**
+```bash
+curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/claude-switch \
+  -o ~/bin/claude-switch
+```
+
+**Option B: With wget**
+```bash
+wget -q https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/claude-switch \
+  -O ~/bin/claude-switch
+```
+
+**Option C: Clone repository (for local development)**
+```bash
+git clone https://github.com/FlorianBruniaux/cc-copilot-bridge.git
+cp cc-copilot-bridge/claude-switch ~/bin/
+```
+
+#### Step 3: Make Executable
+
+```bash
+chmod +x ~/bin/claude-switch
+```
+
+#### Step 4: Configure Shell
+
+**Detect your shell**:
+```bash
+echo $SHELL
+# Output: /bin/zsh → Use ~/.zshrc
+# Output: /bin/bash → Use ~/.bashrc
+```
+
+**Add aliases to shell config** (`~/.zshrc` or `~/.bashrc`):
+
+```bash
+# For zsh users
 cat >> ~/.zshrc << 'EOF'
 
 # Claude Code Multi-Provider
@@ -43,10 +114,113 @@ alias ccs='claude-switch status'
 alias ccc-opus='COPILOT_MODEL=claude-opus-4.5 claude-switch copilot'
 alias ccc-sonnet='COPILOT_MODEL=claude-sonnet-4.5 claude-switch copilot'
 alias ccc-haiku='COPILOT_MODEL=claude-haiku-4.5 claude-switch copilot'
-alias ccc-gpt='COPILOT_MODEL=gpt-5.2-codex claude-switch copilot'
+alias ccc-gpt='COPILOT_MODEL=gpt-4.1 claude-switch copilot'
 EOF
 
-source ~/.zshrc
+# For bash users, replace ~/.zshrc with ~/.bashrc in the command above
+```
+
+**Manual alternative** (if you prefer editing manually):
+1. Open `~/.zshrc` (or `~/.bashrc`) in your editor
+2. Scroll to the end of the file
+3. Copy-paste the alias block above
+4. Save and close
+
+#### Step 5: Reload Shell Configuration
+
+```bash
+source ~/.zshrc  # or source ~/.bashrc
+```
+
+#### Step 6: Verify Installation
+
+```bash
+# Test that claude-switch is in PATH
+which claude-switch
+# Expected output: /Users/yourname/bin/claude-switch
+
+# Test aliases
+ccs
+# Expected output: Provider status table
+```
+
+**Expected output**:
+```
+=== Claude Code Provider Status ===
+
+Anthropic API:  ✓ Reachable
+copilot-api:    ✗ Not running (install with: npm install -g copilot-api)
+Ollama:         ✗ Not running (install with: brew install ollama)
+
+=== Recent Sessions ===
+(no logs yet)
+```
+
+#### Troubleshooting Manual Installation
+
+| Issue | Solution |
+|-------|----------|
+| `claude-switch: command not found` | Run `source ~/.zshrc` or restart terminal |
+| `Permission denied` | Run `chmod +x ~/bin/claude-switch` |
+| Aliases not working | Check you added to correct file (~/.zshrc vs ~/.bashrc) |
+| `~/bin` not in PATH | Add `export PATH="$HOME/bin:$PATH"` to shell config |
+
+---
+
+### Security Notes
+
+#### Why Manual Installation?
+
+- ✅ **Review every command** before execution
+- ✅ **Understand what's installed** (single script + aliases)
+- ✅ **Avoid "curl \| bash"** pattern security concerns
+- ✅ **Customize paths** if needed
+
+#### What Gets Modified?
+
+Manual installation touches exactly 3 locations:
+
+| Location | Purpose | Reversible? |
+|----------|---------|-------------|
+| `~/bin/claude-switch` | Main script (334 lines) | ✅ Yes: `rm ~/bin/claude-switch` |
+| `~/.zshrc` (or `~/.bashrc`) | Aliases block (11 lines) | ✅ Yes: Remove block manually |
+| `~/.claude/` | Log files directory | ✅ Yes: `rm -rf ~/.claude` |
+
+#### Verify Script Before Installation (Optional)
+
+```bash
+# Download and inspect before installing
+curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/claude-switch \
+  -o /tmp/claude-switch-preview
+
+# Review the script
+less /tmp/claude-switch-preview
+
+# Check file integrity (optional)
+shasum -a 256 /tmp/claude-switch-preview
+# Compare with published checksum at:
+# https://github.com/FlorianBruniaux/cc-copilot-bridge/releases
+
+# Install after verification
+mv /tmp/claude-switch-preview ~/bin/claude-switch
+chmod +x ~/bin/claude-switch
+```
+
+#### Uninstall Completely
+
+```bash
+# Remove script
+rm ~/bin/claude-switch
+
+# Remove aliases (manual edit)
+# Open ~/.zshrc or ~/.bashrc
+# Delete the "Claude Code Multi-Provider" block
+
+# Remove logs (optional)
+rm -rf ~/.claude
+
+# Reload shell
+source ~/.zshrc  # or ~/.bashrc
 ```
 
 ---

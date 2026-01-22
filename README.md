@@ -37,8 +37,8 @@ A **Copilot bridge** for Claude Code CLI that enables **free** access to 25+ AI 
         │  cc-copilot-bridge │  ◄─── This Tool
         └─────────┬──────────┘
                   │
-        ┌─────────┴──────────────────────────────┐
-        │                                        │
+        ┌─────────┴────────────┌─────────────────┐
+        │                      |                 │
     ┌───▼────┐         ┌───────▼────────┐   ┌───▼────┐
     │ Direct │         │ Copilot Bridge │   │ Ollama │
     │  API   │         │  (copilot-api) │   │ Local  │
@@ -54,14 +54,15 @@ A **Copilot bridge** for Claude Code CLI that enables **free** access to 25+ AI 
 
 ### Installation
 
+**Quick start** (automated, 30 seconds):
 ```bash
-# Automated install (recommended)
 curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
-
-# Or manual install
-cp claude-switch ~/bin/
-chmod +x ~/bin/claude-switch
+source ~/.zshrc  # or ~/.bashrc
 ```
+
+**Security-conscious?** See [Manual Installation Guide](QUICKSTART.md#option-2-manual-security-conscious---3-minutes)
+
+**Full setup guide**: [QUICKSTART.md](QUICKSTART.md)
 
 ### Setup Aliases
 

@@ -1,6 +1,10 @@
 #!/bin/bash
 # Claude Code Multi-Provider Switcher - Automatic Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/claude-switch/main/install.sh | bash
+#
+# 🔒 Security-conscious? Review this script or use manual installation:
+#    https://github.com/FlorianBruniaux/cc-copilot-bridge/blob/main/QUICKSTART.md#option-2-manual-security-conscious---3-minutes
+#
+# Usage: curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
 
 set -e
 

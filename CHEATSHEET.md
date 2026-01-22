@@ -36,8 +36,11 @@ COPILOT_MODEL=gemini-3-pro-preview ccc
 ## 🚀 Quick Start
 
 ```bash
-# Install
+# Install (automatic)
 curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
+
+# Install (manual - security-conscious users)
+# See: QUICKSTART.md#option-2-manual-security-conscious---3-minutes
 
 # Reload shell
 source ~/.zshrc  # or ~/.bashrc
