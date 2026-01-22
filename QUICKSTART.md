@@ -4,6 +4,8 @@
 
 **Get up and running in 2 minutes**
 
+> 📖 **New to Claude Code?** Start with the [Claude Code Ultimate Guide](https://florianbruniaux.github.io/claude-code-ultimate-guide-landing/) to learn the basics before configuring multiple providers.
+
 ---
 
 **What you'll achieve:**

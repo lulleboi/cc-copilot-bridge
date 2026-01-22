@@ -2,6 +2,8 @@
 
 > **TL;DR**: Bash script that routes Claude Code CLI through different AI providers. Use your existing Copilot Pro+ subscription to access Claude/GPT/Gemini models, or run 100% offline with Ollama. Three aliases (`ccc`, `cco`, `ccd`) switch between providers instantly.
 
+> 📖 **New to Claude Code?** Check out the [Claude Code Ultimate Guide](https://florianbruniaux.github.io/claude-code-ultimate-guide-landing/) for comprehensive documentation, tips, and best practices.
+
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -476,12 +478,17 @@ cco
 
 ## 📚 Documentation
 
+### This Project
 - **QUICKSTART.md** - 2-minute setup
 - **MODEL-SWITCHING.md** - Dynamic model selection guide
 - **MCP-PROFILES.md** - MCP Profiles & System Prompts
 - **SECURITY.md** - Security, privacy, and compliance guide
 - **OPTIMISATION-M4-PRO.md** - Apple Silicon optimization
 - **TROUBLESHOOTING.md** - Problem resolution
+
+### Claude Code Resources
+- 📖 **[Claude Code Ultimate Guide](https://florianbruniaux.github.io/claude-code-ultimate-guide-landing/)** - Comprehensive guide to Claude Code CLI
+- 🔗 **[Ultimate Guide Repository](https://github.com/FlorianBruniaux/claude-code-ultimate-guide)** - Complete documentation, tips, and best practices
 
 ---
 
@@ -522,8 +529,16 @@ MIT
 
 ---
 
-## 🔗 Related
+## 🔗 Related Projects
 
-- **Claude Code Ultimate Guide**: Comprehensive guide to Claude Code CLI
-- **Claude Code Router**: Multi-provider API router (different architecture)
-- **awesome-claude-code**: Community tools and resources
+### By the Same Author
+- 📖 **[Claude Code Ultimate Guide](https://florianbruniaux.github.io/claude-code-ultimate-guide-landing/)** - Comprehensive guide to mastering Claude Code CLI
+  - Complete documentation and best practices
+  - Tips & tricks for productivity
+  - MCP server integration guides
+  - GitHub: [claude-code-ultimate-guide](https://github.com/FlorianBruniaux/claude-code-ultimate-guide)
+
+### Community Tools
+- **[copilot-api](https://github.com/ericc-ch/copilot-api)** - GitHub Copilot API proxy (core dependency)
+- **[Ollama](https://ollama.ai/)** - Local AI inference platform
+- **awesome-claude-code** - Curated list of Claude Code resources
