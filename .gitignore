@@ -33,3 +33,8 @@ temp*.sh
 .serena
 
 claudedocs/
+
+# Debug output (temporary analysis)
+debug-*/
+copilot-api-responses/
+debug-responses-api/
