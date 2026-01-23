@@ -15,7 +15,7 @@
 
 Use your existing GitHub Copilot subscription with Claude Code, or run 100% offline with Ollama. Access Claude, GPT, and Gemini models through a unified interface.
 
-[Quick Start](#-quick-start) • [Pricing & Limits](#-github-copilot-pricing--limits) • [Features](#-features) • [Risk Disclosure](#-risk-disclosure)
+🌐 **[View Landing Page](https://florianbruniaux.github.io/cc-copilot-bridge-landing/)** • [Quick Start](#-quick-start) • [Pricing & Limits](#-github-copilot-pricing--limits) • [Features](#-features) • [Risk Disclosure](#-risk-disclosure)
 
 </div>
 
