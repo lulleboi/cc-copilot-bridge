@@ -106,10 +106,27 @@ Before launching, `claude-switch` verifies:
 | Copilot-Claude | /chat/completions | claude-*-4.5 | 100% (permissive) |
 | Copilot-GPT | /chat/completions | gpt-4.1, gpt-5, gpt-5-mini | ~80% (strict validation) |
 | Copilot-Gemini | /chat/completions | gemini-3-flash-preview, gemini-3-pro-preview, gemini-2.5-pro | ~80% (strict validation) |
-| Copilot-Codex | /responses | gpt-*-codex | ❌ Incompatible (copilot-api v0.7.0) |
+| Copilot-Codex | /responses | gpt-*-codex | ✅ Supported (via PR #170 fork) |
 | Ollama | Native | devstral, granite4, qwen3-coder | 100% (permissive) |
 
-**Critical Note:** ALL GPT Codex models (`gpt-5.2-codex`, `gpt-5.1-codex`, etc.) require OpenAI's `/responses` endpoint (launched Oct 2025), which copilot-api doesn't support. Use `gpt-4.1`, `gpt-5`, or `gpt-5-mini` instead.
+**GPT Codex Models (via PR #170):**
+
+GPT Codex models (`gpt-5.2-codex`, `gpt-5.1-codex`, etc.) require OpenAI's `/responses` endpoint.
+- Official copilot-api v0.7.0: ❌ Not supported (`/chat/completions` only)
+- Fork PR #170: ✅ Supported (adds `/responses` endpoint)
+
+**Usage:**
+```bash
+# Terminal 1: Launch fork
+ccfork  # Uses scripts/launch-responses-fork.sh
+
+# Terminal 2: Use Codex models
+ccc-codex       # gpt-5.2-codex (recommended)
+ccc-codex-mini  # gpt-5.1-codex-mini (fast, 0x multiplier)
+ccc-codex-max   # gpt-5.1-codex-max (quality, 3x multiplier)
+```
+
+**PR Tracking:** [ericc-ch/copilot-api#170](https://github.com/ericc-ch/copilot-api/pull/170)
 
 ### MCP Profiles System (Advanced)
 
@@ -543,8 +560,10 @@ Actuellement Gemini 3 Preview:
 
 ## Version Information
 
-- **claude-switch**: v1.4.0 (2026-01-22) - Updated Ollama: Devstral default, 64K context warning
-- **copilot-api**: v0.7.0 (endpoint limitation: /chat/completions only) - voir issue #174 pour fix billing header
+- **claude-switch**: v1.5.0 (2026-01-23) - Added Codex support via copilot-api PR #170 fork
+- **copilot-api**: v0.7.0 (official) + PR #170 fork (for Codex models)
+  - Official: `/chat/completions` only - voir issue #174 pour fix billing header
+  - Fork PR #170: Adds `/responses` endpoint for Codex models
 - **Claude Code CLI**: v2.1.15 (@anthropic-ai/claude-code npm package)
 - **Ollama**: Homebrew service, default model: devstral-small-2 (backup: ibm/granite4:small-h)
 

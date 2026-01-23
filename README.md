@@ -176,12 +176,12 @@ No config changes, no restarts, no environment variable juggling.
 - `ccs` / `claude-switch status` - Check all providers health
 - `claude-switch --help` - Full command reference
 
-### 2. **Dynamic Model Selection** (25+ models)
+### 2. **Dynamic Model Selection** (40+ models)
 
 | Provider | Models | Cost Model |
 |----------|--------|------------|
 | **Anthropic** | opus-4.5, sonnet-4.5, haiku-4.5 | Per token |
-| **Copilot** | claude-*, gpt-4.1, gpt-5, gemini-* | Premium requests quota |
+| **Copilot** | claude-*, gpt-4.1, gpt-5, gemini-*, **gpt-codex*** | Premium requests quota |
 | **Ollama** | devstral, granite4, qwen3-coder | Free (local) |
 
 ```bash
@@ -197,7 +197,34 @@ cco-devstral            # Explicit Devstral
 cco-granite             # Granite4 (long context)
 ```
 
-### 3. **MCP Profiles System** (Auto-Compatibility)
+### 3. **GPT Codex Models** (via copilot-api PR #170)
+
+GPT Codex models use OpenAI's `/responses` endpoint, which requires a fork of copilot-api.
+
+**Setup**:
+```bash
+# Terminal 1: Launch fork (auto-clones if needed)
+ccfork
+
+# Terminal 2: Use Codex
+ccc-codex       # gpt-5.2-codex (latest)
+ccc-codex-mini  # gpt-5.1-codex-mini (fast)
+ccc-codex-max   # gpt-5.1-codex-max (quality)
+```
+
+**Available Models**:
+| Model | Multiplier | Use Case |
+|-------|-----------|----------|
+| `gpt-5.2-codex` | 1x | Latest, recommended |
+| `gpt-5.1-codex` | 1x | Stable alternative |
+| `gpt-5.1-codex-mini` | 0x | Fast, free tier |
+| `gpt-5.1-codex-max` | 3x | Maximum quality |
+
+**Status**: [PR #170](https://github.com/ericc-ch/copilot-api/pull/170) - Fork tested, 6/6 tests passed
+
+📖 **Full guide**: [docs/ALL-MODEL-COMMANDS.md](docs/ALL-MODEL-COMMANDS.md)
+
+### 5. **MCP Profiles System** (Auto-Compatibility)
 
 **Problem**: GPT-4.1 has strict JSON schema validation → breaks some MCP servers
 
@@ -212,7 +239,7 @@ cco-granite             # Granite4 (long context)
     └── gemini.json    # Gemini-compatible
 ```
 
-### 4. **Model Identity Injection**
+### 6. **Model Identity Injection**
 
 **Problem**: GPT-4.1 thinks it's Claude when running through Claude Code CLI
 
@@ -226,7 +253,7 @@ cco-granite             # Granite4 (long context)
 
 **Result**: Models correctly identify themselves
 
-### 5. **Health Checks & Fail-Fast**
+### 7. **Health Checks & Fail-Fast**
 
 ```bash
 ccc
@@ -234,7 +261,7 @@ ccc
 #    Start it with: copilot-api start
 ```
 
-### 6. **Session Logging**
+### 8. **Session Logging**
 
 ```bash
 tail ~/.claude/claude-switch.log
@@ -449,7 +476,7 @@ cco
 
 ## 🚀 Version
 
-**Current**: v1.4.0
+**Current**: v1.5.0
 
 **Changelog**: See [CHANGELOG.md](CHANGELOG.md)
 

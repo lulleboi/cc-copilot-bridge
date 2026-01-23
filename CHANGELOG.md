@@ -5,9 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.5.0] - 2026-01-23
 
 ### Added
+
+**GPT Codex Model Support (via copilot-api PR #170)**
+- 🚀 Added support for all GPT Codex models via fork of copilot-api
+  - `gpt-5.2-codex` (latest, recommended)
+  - `gpt-5.1-codex`
+  - `gpt-5.1-codex-mini`
+  - `gpt-5.1-codex-max`
+  - `gpt-5-codex`
+- ✨ New launcher script `scripts/launch-responses-fork.sh`:
+  - Auto-detects if PR #170 is merged (uses official npm if so)
+  - Clones and builds fork automatically if needed
+  - Health check before launching Claude Code
+- ✨ New aliases: `ccfork`, `ccc-codex`, `ccc-codex-std`, `ccc-codex-mini`, `ccc-codex-max`
+- 📝 New documentation:
+  - `docs/ALL-MODEL-COMMANDS.md` - Complete model reference (42 models)
+  - `docs/ALL-MODEL-ALIASES.sh` - Ready-to-use alias file
+  - `docs/QUICK-LAUNCH-GUIDE.md` - Fast setup guide
+  - `docs/research/RESPONSES-API-TEST-RESULTS.md` - Fork test results (6/6 passed)
+
+**Why Fork Required?**
+- Codex models use OpenAI's `/responses` endpoint (launched Oct 2025)
+- Official copilot-api v0.7.0 only supports `/chat/completions`
+- PR #170 adds `/responses` endpoint support
+- **Tracking**: [ericc-ch/copilot-api#170](https://github.com/ericc-ch/copilot-api/pull/170)
 
 **Research Documentation**
 - 📊 Added AgentAPI vs copilot-api comparative analysis in `docs/research/AGENTAPI-VS-COPILOT-API.md`:
@@ -429,8 +453,9 @@ See [REPO-STRUCTURE.md](REPO-STRUCTURE.md) for contribution guidelines.
 - **Repository**: https://github.com/FlorianBruniaux/cc-copilot-bridge
 - **Issues**: https://github.com/FlorianBruniaux/cc-copilot-bridge/issues
 
+[1.5.0]: https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/tag/v1.5.0
 [1.4.0]: https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/tag/v1.4.0
 [1.3.0]: https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/tag/v1.3.0
 [1.2.0]: https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/tag/v1.2.0
 [1.0.0]: https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/tag/v1.0.0
-[Unreleased]: https://github.com/FlorianBruniaux/cc-copilot-bridge/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/FlorianBruniaux/cc-copilot-bridge/compare/v1.5.0...HEAD
