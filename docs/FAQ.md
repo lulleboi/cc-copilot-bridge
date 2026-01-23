@@ -88,7 +88,7 @@ ccc
 # Expected: Claude Code starts successfully
 ```
 
-See [INSTALLATION-VERIFICATION.md](INSTALLATION-VERIFICATION.md) for full checklist.
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for full checklist.
 
 ---
 
@@ -226,8 +226,8 @@ COPILOT_MODEL=gemini-3-pro-preview ccc
 
 **Ollama models**:
 ```bash
-OLLAMA_MODEL=qwen2.5-coder:7b cco
-OLLAMA_MODEL=qwen2.5-coder:14b cco
+OLLAMA_MODEL=devstral-small-2 cco       # Best agentic (default)
+OLLAMA_MODEL=ibm/granite4:small-h cco   # Long context, less VRAM
 ```
 
 Or use pre-configured aliases: `ccc-opus`, `ccc-haiku`, `ccc-gpt`.

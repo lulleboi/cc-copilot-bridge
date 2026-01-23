@@ -214,7 +214,7 @@ copilot- service model key/    base
 |-------|-----------|
 | copilot-api not running | `copilot-api start` |
 | Ollama not responding | `brew services restart ollama` |
-| Model not found | `ollama pull qwen2.5-coder:32b` |
+| Model not found | `ollama pull devstral-small-2` |
 | API key invalid | Check `echo $ANTHROPIC_API_KEY` |
 | Aliases not working | `source ~/.zshrc` |
 

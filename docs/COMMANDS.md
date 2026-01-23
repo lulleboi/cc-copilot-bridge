@@ -24,7 +24,7 @@
 | `ccc-opus` | Claude Opus 4.5 | Slow | Best quality, code review |
 | `ccc-sonnet` | Claude Sonnet 4.5 | Medium | Balanced (default) |
 | `ccc-haiku` | Claude Haiku 4.5 | Fast | Quick questions |
-| `ccc-gpt` | GPT-5.2 Codex | Medium | Alternative perspective |
+| `ccc-gpt` | GPT-4.1 | Fast | Alternative perspective (0x quota) |
 
 ---
 
@@ -34,15 +34,15 @@
 ```bash
 COPILOT_MODEL=claude-opus-4.5 ccc
 COPILOT_MODEL=claude-haiku-4.5 ccc
-COPILOT_MODEL=gpt-5.2-codex ccc
+COPILOT_MODEL=gpt-4.1 ccc
 COPILOT_MODEL=gemini-3-pro-preview ccc
 ```
 
 **Ollama** (local models):
 ```bash
-OLLAMA_MODEL=qwen2.5-coder:7b cco
-OLLAMA_MODEL=qwen2.5-coder:14b cco
-OLLAMA_MODEL=deepseek-coder:6.7b cco
+OLLAMA_MODEL=devstral-small-2 cco       # Best agentic (default)
+OLLAMA_MODEL=ibm/granite4:small-h cco   # Long context, less VRAM
+OLLAMA_MODEL=qwen3-coder:30b cco        # Highest accuracy
 ```
 
 ---

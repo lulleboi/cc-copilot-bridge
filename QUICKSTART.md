@@ -349,9 +349,9 @@ brew install ollama  # macOS
 ollama serve &
 
 # 3. Pull a coding model (choose one)
-ollama pull qwen2.5-coder:32b   # Best quality, ~20GB
+ollama pull devstral-small-2   # Best agentic (default)
 # or
-ollama pull qwen2.5-coder:7b    # Faster, ~4.7GB
+ollama pull ibm/granite4:small-h  # Long context, less VRAM
 
 # 4. Test
 cco
@@ -429,7 +429,7 @@ Keep it running in a separate terminal.
 ### "Ollama model not found"
 
 ```bash
-ollama pull qwen2.5-coder:32b
+ollama pull devstral-small-2
 ```
 
 ### Verify Installation
@@ -449,8 +449,8 @@ alias ccs
 ## Next Steps
 
 - Read [README.md](README.md) for full documentation
-- Check [MODEL-SWITCHING.md](MODEL-SWITCHING.md) for model selection strategies
-- See [REPO-STRUCTURE.md](REPO-STRUCTURE.md) for advanced setup
+- Check [MODEL-SWITCHING.md](docs/MODEL-SWITCHING.md) for model selection strategies
+- See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for advanced setup
 
 ---
 

@@ -63,7 +63,6 @@ Complete documentation index for cc-copilot-bridge - Bridge GitHub Copilot to Cl
 ### Troubleshooting
 - [Troubleshooting Guide](TROUBLESHOOTING.md) - Common issues & solutions
 - [FAQ](FAQ.md) - Frequently asked questions
-- [Installation Verification](INSTALLATION-VERIFICATION.md) - Setup checklist
 
 ### Team & Enterprise
 - [Team Adoption](workflows/TEAM-ADOPTION.md) - Onboarding guide
@@ -222,8 +221,7 @@ cc-copilot-bridge/
     │   └── CODE_OF_CONDUCT.md Community guidelines
     │
     ├── Troubleshooting
-    │   ├── TROUBLESHOOTING.md Common issues
-    │   └── INSTALLATION-VERIFICATION.md Setup checklist
+    │   └── TROUBLESHOOTING.md Common issues
     │
     ├── Workflows
     │   ├── DAILY-DEV.md ····· Daily development
