@@ -25,8 +25,11 @@ jobs:
           else
             VERSION="dev-$(git rev-parse --short HEAD)"
           fi
+          # RPM doesn't allow hyphens in version, replace with tilde
+          RPM_VERSION="${VERSION//-/\~}"
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
-          echo "Building version: ${VERSION}"
+          echo "RPM_VERSION=${RPM_VERSION}" >> $GITHUB_OUTPUT
+          echo "Building version: ${VERSION} (RPM: ${RPM_VERSION})"
 
       - name: Create Release Tarball
         id: tarball
@@ -100,10 +103,12 @@ jobs:
 
           mkdir -p rpm-build/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
+          RPM_VERSION="${{ steps.version.outputs.RPM_VERSION }}"
+
           # Create spec file
           cat > rpm-build/SPECS/claude-switch.spec << EOF
           Name:           claude-switch
-          Version:        ${{ steps.version.outputs.VERSION }}
+          Version:        ${RPM_VERSION}
           Release:        1%{?dist}
           Summary:        Multi-provider switcher for Claude Code CLI
           License:        MIT
@@ -135,13 +140,13 @@ jobs:
           %doc %{_docdir}/%{name}
 
           %changelog
-          * $(date "+%a %b %d %Y") Florian Bruniaux <florian@example.com> - ${{ steps.version.outputs.VERSION }}-1
+          * $(date "+%a %b %d %Y") Florian Bruniaux <florian@example.com> - ${RPM_VERSION}-1
           - Automated build via GitHub Actions
           EOF
 
           # Create source tarball
-          tar czf rpm-build/SOURCES/claude-switch-${{ steps.version.outputs.VERSION }}.tar.gz \
-            --transform "s,^,claude-switch-${{ steps.version.outputs.VERSION }}/," \
+          tar czf rpm-build/SOURCES/claude-switch-${RPM_VERSION}.tar.gz \
+            --transform "s,^,claude-switch-${RPM_VERSION}/," \
             claude-switch README.md QUICKSTART.md docs
 
           # Build RPM
