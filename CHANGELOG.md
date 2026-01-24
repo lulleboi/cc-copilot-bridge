@@ -5,6 +5,118 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Documentation: MLX vs GGUF note in Ollama sections (CLAUDE.md, README.md) - explains performance trade-offs on Apple Silicon
+
+## [1.5.2] - 2026-01-24
+
+### Added
+
+**🎉 Package Managers Support** - Major installation overhaul per community feedback
+
+- **Distribution Methods**:
+  - Homebrew Formula (`Formula/claude-switch.rb`) for macOS/Linux
+  - `.deb` package build for Debian/Ubuntu
+  - `.rpm` package build for RHEL/Fedora/CentOS
+  - GitHub Actions automated build pipeline (`.github/workflows/build-packages.yml`)
+
+- **`--shell-config` Option** - Respectful shell configuration:
+  - Generates aliases dynamically (no static file)
+  - User controls their own `.zshrc`/`.bashrc`
+  - Compatible with antigen, oh-my-zsh, zinit, sheldon
+  - Usage: `eval "$(claude-switch --shell-config)"`
+
+- **Comprehensive Documentation**:
+  - `docs/PACKAGE-MANAGERS.md` - User guide (installation per platform)
+  - `docs/PACKAGE-MANAGERS-EXPLAINED.md` - Technical deep-dive (100+ pages)
+  - `docs/PACKAGE-MANAGERS-SUMMARY.md` - Quick overview
+  - `docs/RELEASE-PROCESS.md` - Maintainer guide
+  - `docs/INSTALL-OPTIONS.md` - 6 shell integration methods
+  - `Formula/README.md` - Homebrew maintainer guide
+
+### Changed
+
+**Installation Script Refactor** (`install.sh`):
+- ✅ **Now asks permission** before modifying `.zshrc`/`.bashrc`
+- ✅ Default choice: manual configuration (option 2)
+- ✅ Creates `~/.claude/aliases.sh` instead of direct modification
+- ✅ Provides instructions for antigen, oh-my-zsh, zinit
+- ✅ Shows clear warning if user refuses configuration
+
+**Documentation Updates**:
+- `README.md` - Package managers as recommended installation method
+- `QUICKSTART.md` - 3 installation options (package > script > manual)
+- `CLAUDE.md` - New "Package Managers Distribution" section
+
+**User Experience Improvements**:
+- Standard installation methods (`brew install`, `apt install`, `dnf install`)
+- Automatic dependency management (netcat installed automatically)
+- Easy updates (`brew upgrade`, `apt upgrade`)
+- Clean uninstall (`brew uninstall`, `dpkg -r`, `rpm -e`)
+
+### Fixed
+
+- **Issue**: `curl | bash` installer modified `.zshrc` without asking (invasive)
+- **Issue**: No support for plugin managers (antigen, oh-my-zsh)
+- **Issue**: Difficult for LLMs to explain installation process
+- **Solution**: Package managers + `--shell-config` option
+
+### Technical Details
+
+- **Version**: 1.5.2 (in `claude-switch` and `Formula/claude-switch.rb`)
+- **Homebrew Dependencies**: `netcat` (required), `ollama` (optional), `node` (optional)
+- **GitHub Actions**: Automatically computes SHA256, builds packages, creates releases
+- **SHA256**: Computed automatically for Homebrew Formula security
+
+### Installation
+
+**Homebrew** (recommended):
+```bash
+brew tap FlorianBruniaux/tap
+brew install claude-switch
+eval "$(claude-switch --shell-config)"
+```
+
+**Debian/Ubuntu**:
+```bash
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v1.5.2/claude-switch_1.5.2.deb
+sudo dpkg -i claude-switch_1.5.2.deb
+eval "$(claude-switch --shell-config)"
+```
+
+**RHEL/Fedora**:
+```bash
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v1.5.2/claude-switch-1.5.2-1.noarch.rpm
+sudo rpm -i claude-switch-1.5.2-1.noarch.rpm
+eval "$(claude-switch --shell-config)"
+```
+
+### Migration from 1.5.1
+
+**Option 1: Package Manager** (recommended):
+```bash
+# Remove old installation
+rm ~/bin/claude-switch
+rm ~/.claude/aliases.sh
+# Remove "source ~/.claude/aliases.sh" from .zshrc
+
+# Install via Homebrew
+brew tap FlorianBruniaux/tap
+brew install claude-switch
+echo 'eval "$(claude-switch --shell-config)"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Option 2: Keep Script Install**:
+```bash
+# Re-run installer (now asks permission)
+curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
+# Choose option 2 (manual)
+# Add to .zshrc: eval "$(claude-switch --shell-config)"
+```
+
 ## [1.5.1] - 2026-01-23
 
 ### Added
