@@ -1,7 +1,7 @@
 # Competitive Analysis - cc-copilot-bridge
 
-**Date**: 2026-01-22
-**Research Source**: Perplexity Pro comprehensive search (GitHub, npm, PyPI, crates.io)
+**Date**: 2026-01-24 (Updated)
+**Research Source**: Perplexity Pro comprehensive search (GitHub, npm, PyPI, crates.io, Reddit, Hacker News, dev.to)
 
 ---
 
@@ -13,33 +13,130 @@
 - ✅ PyPI: Available
 - ✅ crates.io: Available
 
-**Market Position**: Open market with fragmented solutions. No unified Claude Code ↔ Copilot bridge exists. Closest competitor is **OpenCode** (GitHub official partnership, Jan 2026) but focused on CLI, not VS Code integration.
+**Market Position**: The Claude Code multi-provider ecosystem has matured significantly in 2025-2026. Three architectural approaches dominate:
+1. **Proxy-based routing**: badlogic/lemmy, loulin/claude-bridge, fuergaosi233/claude-code-proxy, Lynkr
+2. **Native multi-provider platforms**: OpenCode (650k users), Crush CLI, Codex CLI
+3. **Subscription bridge**: cc-copilot-bridge (unique - leverages Copilot Pro+ for free Claude Code access)
+
+**Critical Finding**: ALL proxy solutions have broken token usage reporting. cc-copilot-bridge's unique value is exploiting Copilot Pro+ subscription for free access.
+
+---
+
+## 🔴 Critical Ecosystem Limitations (Jan 2026)
+
+### Universal Proxy Limitations
+
+ALL proxy solutions (including copilot-api) share these limitations:
+
+| Feature | Status | Impact |
+|---------|--------|--------|
+| **Token reporting** | ❌ **BROKEN** | Claude Code displays incorrect usage - budget tracking impossible |
+| **Image upload/paste** | ❌ Disabled | Anthropic-only feature |
+| **Input prompt caching** | ❌ Not translated | Higher costs |
+| **Web search/fetch** | ❌ Server-side only | Anthropic magic, can't proxy |
+| **Artifacts** | ❌ Claude-specific | Format not translatable |
+
+### Subscription Authentication Gap
+
+| Tool | Claude Max Subscription Auth | Status |
+|------|------------------------------|--------|
+| Crush CLI | ❌ Rejected by Anthropic (Aug 2025) | ToS concerns |
+| OpenCode | ⚠️ Claims support | Mechanism undocumented |
+| badlogic/lemmy | ❌ No | API keys only |
+| Lynkr | ❌ No | API keys only |
+| **cc-copilot-bridge** | ✅ Via Copilot Pro+ | **Unique workaround** |
 
 ---
 
 ## 📊 Comprehensive Competitive Matrix
 
-### Direct Competitors (Copilot Bridge Focus)
+### Tier 1: Native Multi-Provider Platforms (Production-Ready)
 
-| Feature | **cc-copilot-bridge** | vs-cop-bridge | OpenCode | ToolBridge |
-|---------|----------------------|---------------|----------|------------|
-| **Architecture** | Multi-provider switcher | Copilot proxy only | Multi-LLM CLI | Universal proxy |
-| **Primary Use Case** | Claude Code ↔ Copilot | Copilot → OpenAI API | Terminal AI workflows | Add function calling |
-| **Copilot Integration** | ✅ Native (copilot-api) | ✅ Native | ✅ Native (GitHub OAuth) | ✅ Compatible |
-| **Claude Code Support** | ✅ Primary focus | ❌ No | ✅ Yes | ✅ Yes |
-| **Anthropic Direct** | ✅ Yes (3 providers) | ❌ No | ✅ Yes (multi-LLM) | ⚠️ Via conversion |
-| **Ollama Support** | ✅ Yes (offline mode) | ❌ No | ✅ Yes | ✅ Yes |
-| **Cost Model** | $10/month (Copilot flat) | $10/month | $10/month | Free (proxy) |
-| **Official Partnership** | ❌ No | ❌ No | **✅ GitHub (Jan 2026)** | ❌ No |
-| **MCP Profiles** | ✅ Auto-generated | ❌ No | ❌ No | ⚠️ Partial |
-| **Model Identity Injection** | ✅ Yes | ❌ No | ❌ No | ❌ No |
-| **Health Checks** | ✅ Fail-fast | ⚠️ Basic | ⚠️ Basic | ❌ No |
-| **Session Logging** | ✅ Full audit trail | ❌ No | ⚠️ Basic | ❌ No |
-| **Interface** | CLI + bash aliases | HTTP server | TUI (terminal) | HTTP proxy |
-| **Setup Complexity** | 🟢 Easy | 🟢 Easy | 🟡 Medium | 🟡 Medium |
-| **Last Activity** | **Jan 2026 (v1.2.0)** | Oct 2025 (v1.1.0) | **Jan 2026** | May 2025 |
-| **Popularity** | New | 33 Reddit votes | 149 Reddit votes | Moderate |
-| **GitHub** | cc-copilot-bridge | baun/vs-cop-bridge | opencode-ai/opencode | Oct4Pie/toolbridge |
+| Feature | **OpenCode** | **Crush CLI** | **Codex CLI** | **cc-copilot-bridge** |
+|---------|-------------|---------------|---------------|----------------------|
+| **Type** | Native Go CLI | Native Go CLI | Native Rust CLI | Bash wrapper |
+| **GitHub Stars** | 45-70k | Rising | Official OpenAI | New |
+| **Monthly Users** | 650,000+ | Growing | N/A | New |
+| **Providers** | 75+ | Any OpenAI-compat | GPT-5-Codex | 3 (Copilot, Anthropic, Ollama) |
+| **SWE-bench** | N/A | N/A | 69.1% | 72.7% (Claude) |
+| **MCP Support** | ❌ No | ✅ HTTP/stdio/SSE | ✅ As server | ✅ Dynamic profiles |
+| **Subscription Auth** | ⚠️ Claims support | ❌ Rejected | N/A | ✅ Via Copilot |
+| **Token Reporting** | ⚠️ Unknown | ⚠️ Unknown | ✅ Native | ⚠️ Via proxy |
+| **Offline Mode** | ✅ Ollama | ✅ Local models | ❌ Cloud only | ✅ Ollama |
+| **Last Activity** | Jan 2026 | Jan 2026 | Active | Jan 2026 |
+| **License** | MIT | MIT | Apache 2.0 | MIT |
+
+### Tier 1: Production-Ready Proxy Solutions
+
+| Feature | **badlogic/lemmy** | **Lynkr** | **LiteLLM** | **cc-copilot-bridge** |
+|---------|-------------------|-----------|-------------|----------------------|
+| **Type** | npm proxy | Enterprise proxy | Gateway | Bash wrapper |
+| **Latest Activity** | Jun 2025 | Dec 2025 | Oct 2025 | Jan 2026 |
+| **Multi-Provider** | 10+ | 4 enterprise | 50+ | 3 |
+| **Local Models** | ✅ Ollama | ✅ Ollama | ✅ Any | ✅ Ollama |
+| **Token Caching** | ❌ No | ✅ LRU+TTL | ❌ No | ❌ No |
+| **MCP Support** | ❌ No | ✅ Yes | ❌ No | ✅ Dynamic profiles |
+| **Enterprise Ready** | ❌ No | ✅ Yes | ✅ Yes | ⚠️ Basic |
+| **Anthropic Endorsed** | ❌ No | ❌ No | ✅ Yes | ❌ No |
+| **Free Access** | ❌ API keys | ❌ API keys | ❌ API keys | ✅ Copilot Pro+ |
+| **Install** | `npm i -g` | npm | Docker | `curl \| bash` |
+
+### Tier 2: Specialized Proxy Solutions
+
+| Tool | URL | Specialization | Last Active | Notes |
+|------|-----|----------------|-------------|-------|
+| **loulin/claude-bridge** | github.com/loulin/claude-bridge | OpenAI-compatible direct | Active | Minimal docs |
+| **fuergaosi233/claude-code-proxy** | github.com/fuergaosi233/claude-code-proxy | Bidirectional Anthropic↔OpenAI | Aug 2025 | BIG/SMALL/MIDDLE model mapping |
+| **ziozzang0/claude2openai-proxy** | github.com/ziozzang0/claude2openai-proxy | Multi-user gateway | Aug 2025 | Team deployments |
+| **bfly123/claude_code_bridge** | github.com/bfly123/claude_code_bridge | Multi-AI split-pane CLI | Jan 2026 | ⚠️ Token reporting broken |
+
+### 🔍 Deep Dive: bfly123/claude_code_bridge
+
+**Evaluated**: 2026-01-24 | **Score**: 2/5 (Marginal - R&D/veille only)
+
+| Aspect | Value | Verified |
+|--------|-------|----------|
+| **URL** | github.com/bfly123/claude_code_bridge | ✅ |
+| **Version** | v5.0.6 | ✅ |
+| **Commits** | 296 total, last 10h ago | ✅ |
+| **License** | MIT | ✅ |
+| **Python** | 3.10+ required | ✅ |
+| **Terminal** | WezTerm (recommended) or tmux | ✅ |
+
+**Architecture**:
+- Split-pane CLI for running Claude, Codex, Gemini, OpenCode simultaneously
+- Daemon system (caskd, gaskd, oaskd) with auto-start/stop (60s idle)
+- Persistent context per agent with session resume (`-r` flag)
+- Cross-AI orchestration - models can delegate to each other
+
+**Features Verified**:
+- ✅ Multi-provider: Claude, Codex, Gemini, OpenCode
+- ✅ MCP mentioned: "MCP registration", "delegation tools"
+- ✅ Daemon optimization: "pgrep detection ~4x faster" (internal only)
+- ✅ CI: GitHub Actions present and passing
+
+**Critical Limitations**:
+- ❌ **Token reporting "completely broken"** - budget tracking impossible
+- ❌ Image uploads disabled
+- ❌ Prompt caching not translated
+- ❌ Web search disabled
+- ❌ WezTerm/tmux dependency (not standard terminal)
+- ❌ Python 3.10+ required (vs bash-only for cc-copilot-bridge)
+
+**Comparison with cc-copilot-bridge**:
+
+| Aspect | bfly123/claude_code_bridge | cc-copilot-bridge |
+|--------|---------------------------|-------------------|
+| **Multi-provider** | ✅ Simultaneous (split panes) | ✅ Switching (one at a time) |
+| **Free access** | ❌ API keys required | ✅ Via Copilot Pro+ |
+| **Token reporting** | ❌ Broken | ⚠️ Via proxy (limited) |
+| **MCP profiles** | ❌ Not dynamic | ✅ Auto-generated for GPT strict |
+| **Dependencies** | Python 3.10+, WezTerm/tmux | Bash only |
+| **Setup** | `git clone && ./install.sh` | `curl \| bash` |
+
+**Verdict**: Interesting architecture for R&D exploration (multi-AI simultaneous execution) but **not production-ready** due to broken token reporting. Use for experimentation only.
+
+**Action**: Monitor for token reporting fix. Do not recommend to users.
 
 ### Indirect Competitors (Session/Provider Management)
 
@@ -297,6 +394,60 @@ If "cc-copilot-bridge" gets taken before we claim it:
 
 ---
 
+## 🔧 Complementary Tools & Infrastructure
+
+### MCP Servers for Claude Code
+
+| Server | Purpose | Status | Notes |
+|--------|---------|--------|-------|
+| **GitHub MCP** | Repo ops, PRs, issues | Official | Anthropic maintained |
+| **Filesystem MCP** | CRUD file operations | Official | Core functionality |
+| **Docker MCP** | Container lifecycle | Official | DevOps integration |
+| **PostgreSQL MCP** | DB schema, queries | Official | Database introspection |
+| **Apidog MCP** | API spec → code gen | Third-party | DTOs, controllers |
+| **Desktop Commander** | System commands | Third-party | Process/file ops |
+| **CodeRabbit MCP** | Automated code review | Third-party | PR integration |
+
+### Terminal Multiplexers & Parallel Agents
+
+| Tool | Type | Purpose | Use Case |
+|------|------|---------|----------|
+| **Jon Rad's Tmux MCP** | Python MCP server | AI-driven tmux automation | Multi-agent in panes |
+| **Claude Squad** | tmux wrapper | Parallel agent orchestration | Git worktrees + agents |
+| **TmuxAI** | Terminal assistant | Real-time pane monitoring | Hotkey AI assistance |
+| **agent-of-empires** | Rust agent | Terminal session manager | Linux/macOS automation |
+
+### Token Optimization Tools
+
+| Tool | Platform | Purpose | Key Feature |
+|------|----------|---------|-------------|
+| **Contextify** | macOS | Transcript monitoring | "Total Recall" for history |
+| **Verdent Deck** | Cross-platform | Parallel agents | Git worktrees + token isolation |
+
+**Token Insight**: Claude Code compacts context at ~50% utilization with Sonnet 4.5 (120-130k tokens from 200k). Proactive session compaction before 50% avoids cascading re-processing.
+
+---
+
+## ⚠️ Risk Assessment
+
+### Compliance & ToS Risks
+
+| Risk | Severity | Mitigation |
+|------|----------|------------|
+| **Anthropic crackdown on harnesses** | 🔴 High | VentureBeat reports Jan 2026 crackdown on third-party wrappers |
+| **Proxy API translation gray area** | 🟡 Medium | Prefer official Anthropic-endorsed tools (LiteLLM) |
+| **Copilot ToS interpretation** | 🟡 Medium | copilot-api is community tool, not GitHub-endorsed |
+
+### Performance Considerations
+
+| Approach | Latency Overhead | Best For |
+|----------|------------------|----------|
+| **Native platforms** (OpenCode, Crush) | ~0ms | Performance-critical |
+| **Proxy solutions** (lemmy, Lynkr) | 50-200ms | Budget optimization |
+| **cc-copilot-bridge** | ~50-100ms | Copilot subscription users |
+
+---
+
 ## 📝 Next Steps
 
 1. ✅ **Name Confirmed**: cc-copilot-bridge available everywhere
@@ -313,8 +464,14 @@ If "cc-copilot-bridge" gets taken before we claim it:
 - **npm Registry**: npmjs.com/search
 - **PyPI**: pypi.org
 - **crates.io**: crates.io
-- **Reddit**: r/GithubCopilot, r/ClaudeCode
-- **Perplexity Pro**: Comprehensive Jan 2026 search
+- **Reddit**: r/GithubCopilot, r/ClaudeCode, r/LocalLLaMA, r/opencodeCLI
+- **Hacker News**: Claude Code CLI threads (Jan 2026)
+- **YouTube**: Crush CLI, OpenCode coverage
+- **Perplexity Pro**: Comprehensive Jan 2026 search (95 web sources)
+- **Direct GitHub verification**: bfly123/claude_code_bridge, badlogic/lemmy, charmbracelet/crush
 
-**Research Date**: 2026-01-22
+**Research Dates**:
+- Initial: 2026-01-22
+- Updated: 2026-01-24 (added Perplexity ecosystem research, bfly123 deep dive)
+
 **Confidence Level**: 99% (GitHub/npm), 95% (PyPI/crates.io)
