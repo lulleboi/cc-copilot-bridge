@@ -62,30 +62,78 @@ A **multi-provider router** for Claude Code CLI that lets you switch between AI 
 
 ### Installation
 
-**Quick start** (automated, 30 seconds):
+**Recommended: Package Managers** (clean, dependency-managed, easy updates)
+
+<details>
+<summary><b>Homebrew (macOS/Linux)</b></summary>
+
+```bash
+brew tap FlorianBruniaux/tap
+brew install claude-switch
+eval "$(claude-switch --shell-config)"
+```
+
+Add to `~/.zshrc`: `eval "$(claude-switch --shell-config)"`
+
+</details>
+
+<details>
+<summary><b>Debian/Ubuntu (.deb)</b></summary>
+
+```bash
+VERSION="1.5.2"  # Check releases for latest
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v${VERSION}/claude-switch_${VERSION}.deb
+sudo dpkg -i claude-switch_${VERSION}.deb
+eval "$(claude-switch --shell-config)"
+```
+
+Add to `~/.bashrc`: `eval "$(claude-switch --shell-config)"`
+
+</details>
+
+<details>
+<summary><b>RHEL/Fedora (.rpm)</b></summary>
+
+```bash
+VERSION="1.5.2"  # Check releases for latest
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v${VERSION}/claude-switch-${VERSION}-1.noarch.rpm
+sudo rpm -i claude-switch-${VERSION}-1.noarch.rpm
+eval "$(claude-switch --shell-config)"
+```
+
+Add to `~/.bashrc`: `eval "$(claude-switch --shell-config)"`
+
+</details>
+
+**Alternative: Script Install** (if package managers unavailable)
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
-source ~/.zshrc  # or ~/.bashrc
 ```
 
-**Security-conscious?** See [Manual Installation Guide](QUICKSTART.md#option-2-manual-security-conscious---3-minutes)
+**Full guides**:
+- [Package Managers](docs/PACKAGE-MANAGERS.md) - Recommended method
+- [Quick Start](QUICKSTART.md) - All installation options
+- [Install Options](docs/INSTALL-OPTIONS.md) - Integration with antigen, oh-my-zsh, etc.
 
-**Full setup guide**: [QUICKSTART.md](QUICKSTART.md)
+### Aliases Included
 
-### Setup Aliases
+The installer creates `~/.claude/aliases.sh` with these commands:
 
 ```bash
-# Add to ~/.bash_aliases or ~/.zshrc
-alias ccd='claude-switch direct'      # Anthropic API (paid)
-alias ccc='claude-switch copilot'     # GitHub Copilot (free*)
-alias cco='claude-switch ollama'      # Ollama Local (offline)
-alias ccs='claude-switch status'      # Check all providers
+# Core commands (created automatically)
+ccd        # Anthropic API (paid)
+ccc        # GitHub Copilot (default: Claude Sonnet 4.5)
+cco        # Ollama Local (offline)
+ccs        # Check all providers
 
-# Model shortcuts
-alias ccc-gpt='COPILOT_MODEL=gpt-4.1 claude-switch copilot'
-alias ccc-opus='COPILOT_MODEL=claude-opus-4.5 claude-switch copilot'
-alias ccc-gemini='COPILOT_MODEL=gemini-2.5-pro claude-switch copilot'
+# Model shortcuts (25+ models)
+ccc-gpt='COPILOT_MODEL=gpt-4.1 claude-switch copilot'
+ccc-opus='COPILOT_MODEL=claude-opus-4.5 claude-switch copilot'
+ccc-gemini='COPILOT_MODEL=gemini-2.5-pro claude-switch copilot'
 ```
+
+See [INSTALL-OPTIONS.md](docs/INSTALL-OPTIONS.md) for integration with antigen, oh-my-zsh, zinit, etc.
 
 ### Usage
 
@@ -360,6 +408,8 @@ OLLAMA_MODEL=devstral-64k cco
 **Requirements**:
 1. Ollama installed (`ollama.ai`)
 2. Models downloaded (`ollama pull devstral-small-2`)
+
+> **Note**: Ollama uses GGUF format (universal). For maximum Mac performance with small models (<22B), LM Studio + MLX can be up to 4x faster. However, for models >30B, GGUF becomes more performant. LM Studio is not compatible with claude-switch.
 
 ---
 

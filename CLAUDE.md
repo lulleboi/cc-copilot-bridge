@@ -217,6 +217,8 @@ ollama create devstral-64k -f ~/.ollama/Modelfile.devstral-64k
 - [docs.ollama - Context](https://docs.ollama.com/context-length)
 - [r/LocalLLaMA benchmarks](https://www.reddit.com/r/LocalLLaMA/comments/1plbjqg/)
 
+> **Note MLX vs GGUF** : Ollama utilise exclusivement GGUF (format universel). Pour performance maximale sur Mac avec petits modèles (<22B params), LM Studio + MLX peut être jusqu'à 4x plus rapide. Cependant, pour modèles >30B, GGUF redevient plus performant. LM Studio n'est pas compatible avec claude-switch. [Source: lmstudio-ai/mlx-engine#101](https://github.com/lmstudio-ai/mlx-engine/issues/101)
+
 ## Commands for Development
 
 ### Testing Providers
@@ -371,6 +373,204 @@ ollama pull ibm/granite4:small-h
 | Offline work | `cco` | No internet required |
 | Best agentic local | `cco-devstral` | Devstral-small-2 (68% SWE-bench) |
 | Long context local | `cco-granite` | Granite4 (70% less VRAM) |
+
+## Package Managers Distribution
+
+### Overview
+
+**Version 1.5.2+** supports distribution via package managers (Homebrew, .deb, .rpm) pour une installation propre et standardisée.
+
+**Avantages** :
+- ✅ Installation standard (`brew install`, `apt install`, `dnf install`)
+- ✅ Gestion automatique des dépendances (netcat, etc.)
+- ✅ Updates faciles (`brew upgrade`, `apt upgrade`)
+- ✅ Désinstallation propre
+- ✅ Pas d'exécution de scripts curl | bash
+- ✅ Configuration shell via `--shell-config` (dynamique)
+
+### Installation Methods
+
+**Homebrew (macOS/Linux)** :
+```bash
+brew tap FlorianBruniaux/tap
+brew install claude-switch
+eval "$(claude-switch --shell-config)"
+```
+
+**Debian/Ubuntu (.deb)** :
+```bash
+VERSION="1.5.2"
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v${VERSION}/claude-switch_${VERSION}.deb
+sudo dpkg -i claude-switch_${VERSION}.deb
+eval "$(claude-switch --shell-config)"
+```
+
+**RHEL/Fedora (.rpm)** :
+```bash
+VERSION="1.5.2"
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v${VERSION}/claude-switch-${VERSION}-1.noarch.rpm
+sudo rpm -i claude-switch-${VERSION}-1.noarch.rpm
+eval "$(claude-switch --shell-config)"
+```
+
+### Shell Configuration
+
+**Option `--shell-config`** (dynamique, recommandée) :
+
+```bash
+# Test immédiat
+source <(claude-switch --shell-config)
+
+# Ajouter au .zshrc/.bashrc (toujours à jour)
+eval "$(claude-switch --shell-config)"
+```
+
+**Avantages** :
+- Génération dynamique des aliases
+- Toujours à jour avec le script
+- Pas de fichier statique à maintenir
+- Compatible antigen, oh-my-zsh, zinit
+
+**Alternative** (fichier statique) :
+```bash
+# Générer une fois
+claude-switch --shell-config > ~/.claude/aliases.sh
+
+# Sourcer dans .zshrc
+source ~/.claude/aliases.sh
+
+# Ou avec antigen
+antigen bundle ~/.claude/aliases.sh
+```
+
+### GitHub Actions Build Pipeline
+
+**Déclencheur** : Push d'un tag Git (ex: `git tag v1.5.2 && git push --tags`)
+
+**Étapes automatiques** :
+1. Compute SHA256 pour Homebrew Formula
+2. Build package `.deb` (Debian/Ubuntu)
+3. Build package `.rpm` (RHEL/Fedora/CentOS)
+4. Update `Formula/claude-switch.rb` avec SHA256
+5. Create GitHub Release
+6. Attach packages (.deb, .rpm, .rb) aux assets
+7. Commit Formula update dans le repo
+
+**Workflow** : `.github/workflows/build-packages.yml`
+
+### Homebrew Tap Structure
+
+```
+FlorianBruniaux/homebrew-tap/
+├── Formula/
+│   └── claude-switch.rb    # Homebrew formula
+└── README.md
+```
+
+**Convention** : Le repo `homebrew-tap` devient le tap `FlorianBruniaux/tap`
+
+**Formula** : `Formula/claude-switch.rb` (Ruby)
+- URL du tarball source (GitHub archive)
+- SHA256 checksum (sécurité)
+- Dépendances (`netcat`, optionnel: `ollama`, `node`)
+- Installation script (copie dans `/usr/local/bin`)
+
+### Release Process
+
+**Quick checklist** :
+```bash
+# 1. Update version
+vim claude-switch  # Version: 1.5.3
+vim Formula/claude-switch.rb  # version "1.5.3"
+
+# 2. Commit & tag
+git add -A
+git commit -m "Release v1.5.3: Description"
+git tag -a v1.5.3 -m "Release v1.5.3"
+
+# 3. Push tag (triggers GitHub Actions)
+git push origin main
+git push origin v1.5.3
+
+# 4. Wait for GitHub Actions (~5-10 min)
+# Check: https://github.com/FlorianBruniaux/cc-copilot-bridge/actions
+
+# 5. Update Homebrew tap
+cd ../homebrew-tap
+cp ../cc-copilot-bridge/Formula/claude-switch.rb Formula/
+git add Formula/claude-switch.rb
+git commit -m "Update claude-switch to v1.5.3"
+git push
+
+# 6. Test
+brew update
+brew upgrade claude-switch
+```
+
+**Détails complets** : Voir `docs/RELEASE-PROCESS.md`
+
+### Documentation
+
+- **PACKAGE-MANAGERS.md** : Guide utilisateur complet (installation, intégration shell)
+- **PACKAGE-MANAGERS-EXPLAINED.md** : Explication technique détaillée (Homebrew, .deb, .rpm, GitHub Actions)
+- **RELEASE-PROCESS.md** : Process complet de release (checklist, troubleshooting, rollback)
+- **INSTALL-OPTIONS.md** : Intégration avec antigen, oh-my-zsh, zinit, etc.
+
+### Testing Locally
+
+**Homebrew Formula** :
+```bash
+# Build from local formula
+brew install --build-from-source Formula/claude-switch.rb
+
+# Verify
+claude-switch --version
+eval "$(claude-switch --shell-config)"
+```
+
+**Debian Package** :
+```bash
+# Build .deb
+dpkg-deb --build deb-build/claude-switch_1.5.2
+
+# Install
+sudo dpkg -i claude-switch_1.5.2.deb
+
+# Verify
+which claude-switch
+```
+
+**RPM Package** :
+```bash
+# Build .rpm
+rpmbuild --define "_topdir $(pwd)/rpm-build" -ba rpm-build/SPECS/claude-switch.spec
+
+# Install (Fedora/RHEL)
+sudo rpm -i rpm-build/RPMS/*/claude-switch-*.rpm
+```
+
+### Troubleshooting Packages
+
+**Homebrew SHA256 mismatch** :
+```bash
+# Recalculer SHA256
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/archive/refs/tags/v1.5.2.tar.gz
+sha256sum v1.5.2.tar.gz
+
+# Update Formula
+sed -i 's/sha256 ".*"/sha256 "NEW_SHA"/' Formula/claude-switch.rb
+```
+
+**Debian dependency issues** :
+```bash
+sudo apt-get install -f  # Fix broken dependencies
+```
+
+**RPM build fails** :
+```bash
+# Vérifier que le tarball source existe
+ls rpm-build/SOURCES/claude-switch-*.tar.gz
+```
 
 ## Known Issues & Patches
 

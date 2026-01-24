@@ -17,24 +17,94 @@
 
 ## Installation
 
-### Option 1: Automatic (Recommended) - 30 seconds
+### Option 1: Package Managers (Recommended) - 30 seconds
 
-Perfect if you trust the repository and want fastest setup.
+**Clean, dependency-managed, easy updates** - no script execution needed
+
+<details>
+<summary><b>Homebrew (macOS/Linux)</b></summary>
+
+```bash
+brew tap FlorianBruniaux/tap
+brew install claude-switch
+eval "$(claude-switch --shell-config)"
+```
+
+Add to `~/.zshrc` or `~/.bashrc`:
+```bash
+eval "$(claude-switch --shell-config)"
+```
+
+**Update**: `brew upgrade claude-switch`
+**Uninstall**: `brew uninstall claude-switch`
+
+</details>
+
+<details>
+<summary><b>Debian/Ubuntu (.deb)</b></summary>
+
+```bash
+VERSION="1.5.2"  # Check releases for latest
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v${VERSION}/claude-switch_${VERSION}.deb
+sudo dpkg -i claude-switch_${VERSION}.deb
+eval "$(claude-switch --shell-config)"
+```
+
+Add to `~/.bashrc`:
+```bash
+eval "$(claude-switch --shell-config)"
+```
+
+**Uninstall**: `sudo dpkg -r claude-switch`
+
+</details>
+
+<details>
+<summary><b>RHEL/Fedora (.rpm)</b></summary>
+
+```bash
+VERSION="1.5.2"  # Check releases for latest
+wget https://github.com/FlorianBruniaux/cc-copilot-bridge/releases/download/v${VERSION}/claude-switch-${VERSION}-1.noarch.rpm
+sudo rpm -i claude-switch-${VERSION}-1.noarch.rpm
+eval "$(claude-switch --shell-config)"
+```
+
+Add to `~/.bashrc`:
+```bash
+eval "$(claude-switch --shell-config)"
+```
+
+**Uninstall**: `sudo rpm -e claude-switch`
+
+</details>
+
+**Full guide**: [PACKAGE-MANAGERS.md](docs/PACKAGE-MANAGERS.md)
+
+---
+
+### Option 2: Interactive Script Install - 30 seconds
+
+**Respects your shell config** - asks before modifying `.zshrc`/`.bashrc`
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/FlorianBruniaux/cc-copilot-bridge/main/install.sh | bash
-source ~/.zshrc  # or ~/.bashrc
 ```
 
 **What it does**:
 - ✅ Downloads `claude-switch` to `~/bin/`
-- ✅ Configures shell aliases automatically
-- ✅ Creates log directory
+- ✅ Creates `~/.claude/aliases.sh` with all aliases
+- ✅ **ASKS** if you want automatic `.zshrc` modification
+- ✅ Provides instructions for antigen, oh-my-zsh, zinit, etc.
 - ✅ Verifies prerequisites
+
+**After install**: Choose your integration method (see [INSTALL-OPTIONS.md](docs/INSTALL-OPTIONS.md))
+- Standard: `source ~/.zshrc`
+- Antigen: Add `antigen bundle ~/.claude/aliases.sh` to `.zshrc`
+- Oh-My-Zsh: Link as custom plugin
 
 ---
 
-### Option 2: Manual (Security-conscious) - 3 minutes
+### Option 3: Manual (Security-conscious) - 3 minutes
 
 Perfect if you want to review every step or customize the installation.
 
