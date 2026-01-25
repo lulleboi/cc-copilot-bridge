@@ -398,11 +398,31 @@ cat debug-gemini/diagnostic-report.md
 
 ### Modèles recommandés
 
-| Model | Size | SWE-bench | Context | Use Case |
-|-------|------|-----------|---------|----------|
-| **devstral-small-2** (default) | 24B | 68% | 256K native | Best agentic coding |
-| ibm/granite4:small-h | 32B (9B active) | ~62% | 1M | Long context, 70% less VRAM |
-| qwen3-coder:30b | 30B | 85% | 256K | Highest accuracy (needs template work) |
+**Important** : SWE-bench Verified mesure la performance agentic réelle (résolution de GitHub issues avec tool calling, édition multi-fichiers). Les scores HumanEval élevés ne garantissent PAS une bonne performance agentic.
+
+| Model | SWE-bench Verified | Params | Practical Status | Use Case |
+|-------|-------------------|--------|------------------|----------|
+| **devstral-small-2** (default) | **68.0%** | 24B | ✅ Best agentic | Daily coding, proven reliable |
+| **qwen3-coder:30b** | **69.6%** | 30B | ⚠️ Needs template work | Highest bench, config issues |
+| **ibm/granite4:small-h** | ~62% | 32B (9B active) | ✅ Long context | 70% less VRAM, 1M context |
+| **glm-4.7-flash** | ~65-68% (estimated) | 30B MoE (3B active) | ❌ Untested | Speed-optimized variant |
+
+**Sources des benchmarks** :
+- Devstral-small-2 : [Mistral AI](https://mistral.ai/news/devstral-2-vibe-cli) - 68.0% SWE-bench Verified
+- Qwen3-coder : [Index.dev](https://www.index.dev/blog/qwen-ai-coding-review) - 69.6% SWE-bench Verified, **MAIS** [Qwen blog](https://qwenlm.github.io/blog/qwen3-coder/) indique "Agent RL post-training" (bolt-on)
+- GLM-4.7 full : [Z.AI](https://z.ai/blog/glm-4.7) - 73.8% (Flash variant [WaveSpeedAI](https://wavespeed.ai/blog/posts/glm-4-7-flash-vs-glm-4-7/) = "tier lower")
+
+**Pourquoi Devstral malgré SWE-bench inférieur ?**
+
+Qwen3-coder a 1.6% de SWE-bench en plus, MAIS :
+- Devstral : **Architecture native** pour agentic software engineering ([Mistral AI](https://mistral.ai/news/devstral-2-vibe-cli))
+- Qwen3 : **Post-training bolt-on** (Agent RL ajouté après coup) → "needs template work" en pratique
+- Devstral : **Prouvé fiable** avec Claude Code (CLAUDE.md testing)
+- Qwen3 : **Gap bench vs réalité** (comme Llama3.1:8b : 68% HumanEval mais 15% SWE-bench)
+
+**⚠️ Modèles NON recommandés** (SWE-bench faible malgré HumanEval élevé) :
+- CodeLlama:13b : 40% SWE-bench (pas de tool calling fiable)
+- Llama3.1:8b : **15%** SWE-bench ("catastrophic failure" sur tâches agentic, [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1plbjqg/))
 
 ### Devstral-small-2 (Recommandé)
 

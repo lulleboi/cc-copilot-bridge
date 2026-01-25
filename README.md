@@ -399,11 +399,30 @@ OLLAMA_MODEL=devstral-64k cco
 ```
 
 **Recommended Models (January 2026)**:
-| Model | SWE-bench | Use Case |
-|-------|-----------|----------|
-| **devstral-small-2** | 68% | Best agentic coding (default) |
-| ibm/granite4:small-h | ~62% | Long context, 70% less VRAM |
-| qwen3-coder:30b | 85% | Highest accuracy (needs template work) |
+
+SWE-bench measures real-world agentic coding ability (GitHub issue resolution with tool calling, multi-file editing). High HumanEval scores don't guarantee agentic performance.
+
+| Model | SWE-bench Verified | Params | Practical Status | Use Case |
+|-------|-------------------|--------|------------------|----------|
+| **devstral-small-2** | **68.0%** | 24B | ✅ Best agentic (default) | Daily coding, proven reliable |
+| **qwen3-coder:30b** | **69.6%** | 30B | ⚠️ Needs template work | Highest bench, config issues |
+| **ibm/granite4:small-h** | ~62% | 32B (9B active) | ✅ Long context | 70% less VRAM, 1M context |
+| **glm-4.7-flash** | ~65-68% (estimated) | 30B MoE (3B active) | ❌ Untested with Claude Code | Speed-optimized variant |
+
+**Benchmark Sources:**
+- Devstral-small-2: [Mistral AI](https://mistral.ai/news/devstral-2-vibe-cli) - 68.0% SWE-bench Verified
+- Qwen3-coder: [Index.dev](https://www.index.dev/blog/qwen-ai-coding-review) - 69.6% SWE-bench Verified
+- GLM-4.7 full: [Z.AI](https://z.ai/blog/glm-4.7) - 73.8% (Flash variant "tier lower", no published bench)
+
+**Why Devstral despite lower SWE-bench?**
+- Designed specifically for agentic software engineering tasks ([source](https://mistral.ai/news/devstral-2-vibe-cli))
+- Native architecture for tool calling vs post-training bolt-on (Qwen3)
+- "Best agentic coding" confirmed in practice (CLAUDE.md testing)
+- Qwen3 has higher bench but "needs template work" in real usage
+
+**⚠️ Models NOT recommended** (low SWE-bench despite good HumanEval):
+- CodeLlama:13b - 40% SWE-bench (no reliable tool calling)
+- Llama3.1:8b - **15%** SWE-bench ("catastrophic failure" on agentic tasks)
 
 **Requirements**:
 1. Ollama installed (`ollama.ai`)

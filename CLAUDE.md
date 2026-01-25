@@ -198,11 +198,42 @@ ollama create devstral-64k -f ~/.ollama/Modelfile.devstral-64k
 
 ### Ollama Models (Updated January 2026)
 
-| Model | Size | SWE-bench | Context | Use Case |
-|-------|------|-----------|---------|----------|
-| **devstral-small-2** (default) | 24B | 68% | 256K native | Best agentic coding |
-| ibm/granite4:small-h | 32B (9B active) | ~62% | 1M | Long context, 70% less VRAM |
-| qwen3-coder:30b | 30B | 85% | 256K | Highest accuracy, needs template work |
+**Important**: SWE-bench Verified measures real-world agentic coding (GitHub issue resolution with tool calling, multi-file editing, multi-step reasoning). High HumanEval scores don't guarantee agentic performance.
+
+| Model | SWE-bench Verified | Params | Practical Status | Use Case |
+|-------|-------------------|--------|------------------|----------|
+| **devstral-small-2** (default) | **68.0%** | 24B | ✅ Best agentic | Daily coding, proven reliable |
+| **qwen3-coder:30b** | **69.6%** | 30B | ⚠️ Needs template work | Highest bench, config issues |
+| **ibm/granite4:small-h** | ~62% | 32B (9B active) | ✅ Long context | 70% less VRAM, 1M context |
+| **glm-4.7-flash** | ~65-68% (estimated) | 30B MoE (3B active) | ❌ Untested with Claude Code | Speed-optimized variant |
+
+**Benchmark Sources & Analysis:**
+
+1. **Devstral-small-2**: [Mistral AI](https://mistral.ai/news/devstral-2-vibe-cli) - 68.0% SWE-bench Verified
+   - Quote: "Devstral Small 2 excels at using tools to explore codebases, editing multiple files and power software engineering agents"
+   - **Native architecture** for agentic tasks (not post-training bolt-on)
+   - Proven reliable with Claude Code CLI in practice
+
+2. **Qwen3-coder**: [Index.dev](https://www.index.dev/blog/qwen-ai-coding-review) - 69.6% SWE-bench Verified
+   - HumanEval: 85% (excellent code completion)
+   - **BUT**: [Qwen blog](https://qwenlm.github.io/blog/qwen3-coder/) reveals "long-horizon RL (Agent RL) was introduced" = **post-training bolt-on**
+   - Real-world gap: "needs template work" (CLAUDE.md) - likely prompt engineering or non-standard tool call format
+   - Example of bench vs reality disconnect (like Llama3.1:8b: 68% HumanEval but 15% SWE-bench)
+
+3. **GLM-4.7 full**: [Z.AI](https://z.ai/blog/glm-4.7) - 73.8% SWE-bench Verified
+   - GLM-4.7-Flash: [WaveSpeedAI](https://wavespeed.ai/blog/posts/glm-4-7-flash-vs-glm-4-7/) = "tier lower" performance
+   - No published SWE-bench for Flash variant → estimated ~65-68%
+   - 3B active params (MoE) vs 24B full (Devstral) = less "reasoning budget"
+
+**Why Devstral despite 1.6% lower SWE-bench?**
+
+Benchmark scores ≠ practical reliability. Key difference:
+- **Architecture**: Devstral = native agentic design vs Qwen3 = Agent RL bolt-on
+- **Practice**: Devstral = "best agentic" confirmed vs Qwen3 = "needs template work"
+- **Gap precedent**: Llama3.1:8b = 68% HumanEval but **15%** SWE-bench ("catastrophic failure")
+
+Quote from [Understanding LLM Code Benchmarks](https://runloop.ai/blog/understanding-llm-code-benchmarks-from-humaneval-to-swe-bench):
+> "This shift reflects a broader trend: moving from the question **'Can the model code?'** to **'Can the model engineer?'**—a far more nuanced and practical inquiry."
 
 **⚠️ Models NOT recommended for agentic tasks:**
 | Model | SWE-bench | Why Not |
